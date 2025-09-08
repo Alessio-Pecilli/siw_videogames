@@ -1,0 +1,319 @@
+/* Stile base per il body */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Arial', sans-serif;
+    background-color: #212121;
+    color: #fff;
+}
+
+main.main-content {
+    flex: 1;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Header e nav */
+.header {
+    background: linear-gradient(135deg, #FF5733 0%, #FFC300 100%);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.nav-link.active {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Sezione principale */
+.main-content {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Card del profilo */
+.profile-card {
+    background-color: #2c2c2c;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+    border: 1px solid #444;
+}
+
+/* Header del profilo */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff5733; /* Colore del testo di benvenuto */
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+/* Card informazioni */
+.info-card {
+    background-color: #3c3c3c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.info-card h3 {
+    font-size: 24px;
+    color: #ff5733;
+    margin-bottom: 15px;
+}
+
+.error-message {
+    display: block;
+    background-color: rgba(255, 87, 51, 0.1);
+    color: #FF5733;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 87, 51, 0.3);
+    animation: fadeIn 0.3s ease-in;
+}
+
+.info-card p {
+    font-size: 18px;
+    color: #bbb;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px;
+    text-align: center;
+}
+
+.edit-profile-button {
+	background: linear-gradient(135deg, #333 0%, #FF5733 100%);
+}
+
+.change-password-button {
+    background: linear-gradient(135deg, #FFC300 0%, #333 100%);
+}
+
+
+/*footer*/
+
+.footer {
+    background-color: rgba(39, 40, 42, 255);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-form {
+        flex-direction: column;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1111;
+    animation: fadeIn 0.25s;
+}
+/* Card per cambio password */
+.password-card {
+    background-color: #2c2c2c;
+    color: #fff;
+    padding: 32px 28px 22px 28px;
+	padding-right: 2%;
+    border-radius: 10px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+    min-width: 340px;
+    width: 100%;
+    max-width: 410px;
+    animation: fadeIn 0.32s;
+    border: 1.5px solid #FFC300;
+    position: relative;
+}
+.password-card h2 {
+    color: #ff6f61;
+    margin-bottom: 24px;
+    text-align: center;
+}
+.password-card label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+.password-card input[type="password"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border-radius: 5px;
+    border: 1px solid #888;
+    background: #393939;
+    color: #fff;
+    font-size: 1rem;
+}
+.password-card input[type="password"]:focus {
+    outline: 1.4px solid #FFC300;
+	border-color: #FFC300;
+	box-shadow: 0 1.5px 8px 0 #ffc30033;
+    background: #454545;
+}
+.password-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+.password-btn {
+    padding: 8px 18px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.password-btn.submit {
+    background: linear-gradient(135deg, #FFC300 0%, #333 100%);
+    color: white;
+}
+
+.password-btn.cancel {
+    background: linear-gradient(135deg, #333 0%, #FF5733 100%);
+	text-decoration: none;
+    color: white;
+}
+
+.modal-close {
+    position: absolute;
+    right: 13px; top: 13px;
+    background: none;
+    border: none;
+    color: #fcb9b0;
+    font-size: 1.25em;
+    cursor: pointer;
+    padding: 0 6px;
+    z-index: 2;
+}
+.password-error {
+    color: #ff7b7b;
+    margin-bottom: 6px;
+    margin-top: -8px;
+    font-size: 0.98em;
+}
+.password-success {
+    color: #7fff93;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1em;
+}
+@media (max-width: 520px) {
+    .password-card { min-width: unset; padding: 10vw 4vw; }
+}

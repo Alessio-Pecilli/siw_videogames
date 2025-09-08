@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameHub - Registrazione Utente</title>
+  <link rel="stylesheet" th:href="@{/css/registraUtente.css}"}/>
+</head>
+<body>
+	<body>
+		<header class="header">
+		  <nav class="nav">
+		    <a th:href="@{/}" href="/" class="logo">GameHub</a>
+		    <div class="nav-links">
+		      <a th:href="@{/}" href="/" class="nav-link">Home</a>
+		      <a th:href="@{/videogiochi}" href="/videogiochi" class="nav-link">Videogiochi</a>
+		      <a th:href="@{/login}" href="/login" class="nav-link">Accedi</a>
+		    </div>
+		  </nav>
+		</header>
+		
+		<main class="main-content">
+		
+		  <h1>Registrati a GameHub</h1>
+		  
+		  <!-- Messaggio di successo -->
+		  <span th:if="${msgSuccess}" class="success-message" th:text="${msgSuccess}"></span>
+		  <!-- Messaggio di errore -->
+		  <span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>
+		  
+		  <form th:action="@{/register}" method="POST" autocomplete="off">
+		      <!-- Utente fields -->
+		      <div class="form-group">
+		        <label for="nome">Nome</label>
+		        <input type="text" th:field="${utente.nome}" placeholder="Inserisci nome" required minlength="2" autocomplete="off"/>
+		        <span class="form-feedback" th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}"></span>
+		      </div>
+		      <div class="form-group">
+		        <label for="cognome">Cognome</label>
+		        <input type="text" th:field="${utente.cognome}" placeholder="Inserisci cognome" required minlength="2" autocomplete="off"/>
+		        <span class="form-feedback" th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}"></span>
+		      </div>
+		      <div class="form-group">
+		        <label for="email">Email</label>
+		        <input type="email" th:field="${utente.email}" placeholder="Inserisci email" required/>
+		        <span class="form-feedback" th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}"></span>
+		      </div>
+		      <!-- Credentials fields -->
+		      <div class="form-group">
+		        <label for="username">Username</label>
+		        <input type="text" th:field="${credentials.username}" placeholder="Scegli uno username" required minlength="8" autocomplete="off"/>
+		        <span class="form-feedback" th:if="${#fields.hasErrors('credentials.username')}" th:errors="${credentials.username}"></span>
+		      </div>
+		      <div class="form-group">
+		        <label for="password">Password</label>
+		        <input type="password" th:field="${credentials.password}" placeholder="Scegli una password" required minlength="8"/>
+		        <span class="form-feedback" th:if="${#fields.hasErrors('credentials.password')}" th:errors="${credentials.password}"></span>
+		      </div>
+			  <div class="form-group">
+  		        <label for="confermaPwd">Conferma Password</label>
+  		        <input type="password" name="confermaPwd" placeholder="Conferma password" required minlength="8"/>
+  		      </div>
+		      <button type="submit">Registrati</button>
+		      <div class="login-link">
+		        <p>Hai già un account? <a th:href="@{/login}" href="/login" class="signin-link">Accedi</a></p>
+		      </div>
+		   </form>
+		</main>
+		<footer class="footer">
+		  <div class="footer-content">
+		    <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+		  </div>
+		</footer>
+	</body>
+</html>
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>GameHub - Messaggi</title>
+	    <link rel="stylesheet" th:href="@{/css/messaggi.css}">
+	</head>
+	<body>
+		<header class="header">
+		    <nav class="nav">
+		        <a class="logo">GameHub</a>
+		        <div class="nav-links">
+		            <a th:href="@{'/utente/'+${utente.id}}" class="nav-link">Profilo</a>
+		            <a th:href="@{/utente/videogiochi}" class="nav-link active">Videogiochi</a>
+		            <a th:href="@{/logout}" class="nav-link">Esci</a>
+		        </div>
+		    </nav>
+		</header>
+		
+		<main class="main-content">
+		    <div class="game-details">
+		        <!-- Titolo e stato -->
+		        <div class="game-header">
+		            <h1 class="game-title" th:text="${videogioco.titolo}">Titolo Videogioco</h1>
+		            <span class="game-status"
+		                  th:text="${videogioco.stato.descrizione}"
+		                  th:data-stato="${videogioco.stato.descrizione}">
+		                Stato
+		            </span>
+		        </div>
+		
+		        <!-- Immagine -->
+		        <div class="game-image">
+		            <img th:if="${videogioco.urlImmagine != null and !videogioco.urlImmagine.isEmpty()}"
+		                 th:src="${videogioco.urlImmagine}"
+		                 th:alt="${videogioco.titolo}"
+		                 class="game-thumbnail">
+		            <div th:if="${videogioco.urlImmagine == null or videogioco.urlImmagine.isEmpty()}"
+		                 class="game-thumbnail-placeholder">
+		                Immagine non disponibile
+		            </div>
+		        </div>
+		
+		        <!-- Sezione Messaggi -->
+		        <div class="game-description">
+		            <h2>Messaggi</h2>
+		            <div th:if="${messaggi != null and !messaggi.isEmpty()}">
+		                    <li th:each="messaggio : ${messaggi}" class="messaggio.card">
+								<div class="messaggio-card">
+								    <div class="messaggio-content" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+								        <strong th:text="'[' + ${messaggio.ora} + '] ' + ${messaggio.utente.nome} + ' ' + ${messaggio.utente.cognome}">[ora] Nome Cognome</strong>
+								        <p th:text="${messaggio.descrizione}" style="margin-top: 0.3em;">Contenuto messaggio</p>
+								    </div>
+								</div>
+		                    </li>
+		            </div>
+		            <div th:if="${messaggi == null or messaggi.isEmpty()}">
+		                <p>Nessun messaggio ancora.</p>
+		            </div>
+		        </div>
+		
+		        <!-- Form nuovo messaggio -->
+				<div class="game-description">
+				    <h2>Scrivi un nuovo messaggio</h2>
+				    <form method="post" th:action="@{'/utente/videogiochi/' + ${videogioco.id} + '/messaggi'}">
+				        <input type="text" 
+				               name="descrizione"
+				               maxlength="100"
+				               placeholder="Scrivi qualcosa..."
+				               required>
+				        <button type="submit" class="cta-button message-button">Invia messaggio</button>
+				    </form>
+				</div>
+		    </div>
+		</main>
+		
+		<footer class="footer">
+		    <div class="footer-content">
+		        <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+		    </div>
+		</footer>
+	</body>
+</html>

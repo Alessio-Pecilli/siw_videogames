@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<link rel="icon" th:href="@{images/logo.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Dettagli Videogioco</title>
+    <link rel="stylesheet" th:href="@{/css/videogioco.css}">
+</head>
+<body>
+	<header class="header">
+	        <nav class="nav">
+	            <a class="logo">GameHub</a>
+	            <div class="nav-links">
+	                <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link">Profilo</a>
+	                <a th:href="@{/utente/videogiochi}" class="nav-link active">Videogiochi</a>
+	                <a th:href="@{/logout}" class="nav-link">Esci</a>
+	            </div>
+	        </nav>
+	    </header>
+
+    <main class="main-content">
+        <div class="game-details">
+            <div class="game-header">
+                <h1 class="game-title" th:text="${videogioco.titolo}">Titolo Videogioco</h1>
+                <span class="game-status" 
+                      th:text="${videogioco.stato.descrizione}"
+                      th:data-stato="${videogioco.stato.descrizione}">
+                    Stato
+                </span>
+            </div>
+
+            <div class="game-image">
+                <img th:if="${videogioco.urlImmagine != null and !videogioco.urlImmagine.isEmpty()}"
+                     th:src="${videogioco.urlImmagine}"
+                     th:alt="${videogioco.titolo}"
+                     class="game-thumbnail">
+                <div th:if="${videogioco.urlImmagine == null or videogioco.urlImmagine.isEmpty()}"
+                     class="game-thumbnail-placeholder">
+                    Immagine non disponibile
+                </div>
+            </div>
+
+            <div class="game-description">
+                <h2>Descrizione</h2>
+                <p th:text="${videogioco.descrizione}">Descrizione del videogioco</p>
+            </div>
+
+            <div class="game-stats">
+                <div class="stat-box">
+                    <h3>Recensioni</h3>
+                    <span class="stat-number" th:text="${#lists.size(videogioco.recensioni)}">0</span>
+                </div>
+                <div class="stat-box">
+                    <h3>Messaggi</h3>
+                    <span class="stat-number" th:text="${#lists.size(videogioco.messaggi)}">0</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a th:if="${videogioco.stato.descrizione}"
+                   th:href="@{'/utente/videogiochi/' + ${videogioco.id} + '/messaggi'}"
+                   class="cta-button message-button">
+                    Mostra Messaggi
+                </a>
+                <a th:href="@{'/utente/videogiochi/' + ${videogioco.id} + '/recensioni'}"
+                   class="cta-button review-button">
+                    Mostra Recensioni
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+        </div>
+    </footer>
+</body>
+</html>

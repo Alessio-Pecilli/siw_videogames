@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Proposta nuovo gioco</title>
+    <link rel="stylesheet" th:href="@{/css/formNewVideogioco.css}">
+</head>
+<body>
+<header class="header">
+		  <nav class="nav">
+		    <a class="logo">GameHub</a>
+		    <div class="nav-links">
+		      <a th:href="@{'/operatore'+${utente.id}}" class="nav-link">Profilo</a>
+		      <a th:href="@{/operatore/videogiochi}"  class="nav-link active">Videogiochi</a>
+		      <a th:href="@{/logout}" class="nav-link">Esci</a>
+		    </div>
+		  </nav>
+		</header>
+
+<main class="main-content">
+    <h1 th:text="${videogioco.id} == null ? 'Invia una nuova richiesta' : 'Modifica gioco'"></h1>
+	<span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>
+    <form method="post" th:action="@{/operatore/videogiochi/salva}" th:object="${videogioco}" autocomplete="off" novalidate>
+
+        <!-- Campo nascosto per ID -->
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="form-group">
+            <label for="titolo">Titolo</label>
+            <input type="text" id="titolo" th:field="*{titolo}" placeholder="Inserisci il titolo del gioco" required minlength="2" />
+        </div>
+
+        <div class="form-group">
+            <label for="descrizione">Descrizione</label>
+            <input type="text" id="descrizione" th:field="*{descrizione}" placeholder="Breve descrizione del gioco" required minlength="5" />
+        </div>
+
+        <div class="form-group">
+            <label for="urlImmagine">URL immagine</label>
+            <input type="text" id="urlImmagine" th:field="*{urlImmagine}" placeholder="https://esempio.com/immagine.jpg" />
+        </div>
+
+        <div class="form-group">
+            <label for="stato">Stato</label>
+            <select id="stato" th:field="*{stato}">
+                <option value="" disabled>Seleziona stato</option>
+                <option th:each="s : ${stati}" th:value="${s.id}" th:text="${s.descrizione}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Categorie</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item" th:each="c : ${categorie}">
+                    <input type="checkbox" th:field="*{categorie}" th:value="${c.id}" id="|cat_${c.id}|" />
+                    <label th:for="|cat_${c.id}|" th:text="${c.nome}"></label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" th:text="${videogioco.id} == null ? 'Aggiungi gioco' : 'Salva modifiche'"></button>
+    </form>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+    </div>
+</footer>
+</body>
+</html>

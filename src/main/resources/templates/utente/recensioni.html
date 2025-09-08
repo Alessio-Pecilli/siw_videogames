@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>GameHub - Recensioni</title>
+	    <link rel="stylesheet" th:href="@{/css/messaggi.css}">
+	</head>
+	<body>
+		<header class="header">
+		    <nav class="nav">
+		        <a class="logo">GameHub</a>
+		        <div class="nav-links">
+		            <a th:href="@{'/utente' + ${utente.id}}" class="nav-link">Profilo</a>
+		            <a th:href="@{/utente/videogiochi}" class="nav-link active">Videogiochi</a>
+		            <a th:href="@{/logout}" class="nav-link">Esci</a>
+		        </div>
+		    </nav>
+		</header>
+		
+		<main class="main-content">
+		    <div class="game-details">
+		        <!-- Titolo e stato -->
+		        <div class="game-header">
+		            <h1 class="game-title">
+					    <span th:text="${videogioco.titolo}">Titolo Videogioco</span>
+					    <span th:if="${haRecensioni}"
+					          th:text="' – Media voti: ' + ${#numbers.formatDecimal(mediaVoti, 1, 1)}"
+					          class="media-voto-text"></span>
+						<br/>
+					    <span th:unless="${haRecensioni}"
+					          class="ha-recensioni-text">Nessuna recensione ancora</span>
+					</h1>
+		            <span class="game-status"
+		                  th:text="${videogioco.stato.descrizione}"
+		                  th:data-stato="${videogioco.stato.descrizione}">
+		                Stato
+		            </span>
+		        </div>
+		
+		        <!-- Immagine -->
+		        <div class="game-image">
+		            <img th:if="${videogioco.urlImmagine != null and !videogioco.urlImmagine.isEmpty()}"
+		                 th:src="${videogioco.urlImmagine}"
+		                 th:alt="${videogioco.titolo}"
+		                 class="game-thumbnail">
+		            <div th:if="${videogioco.urlImmagine == null or videogioco.urlImmagine.isEmpty()}"
+		                 class="game-thumbnail-placeholder">
+		                Immagine non disponibile
+		            </div>
+		        </div>
+		
+		        <!-- Sezione Recensioni -->
+		        <div class="game-description">
+		            <h2>Recensioni</h2>
+		            <div th:if="${recensioni != null and !recensioni.isEmpty()}">
+		                <ul>
+		                    <li th:each="recensione : ${recensioni}" class="recensione-card">
+							    <div th:if="${recensione.utente.id != utente.id}" class="recensione-content">
+							        <div>
+							            <strong th:text="'[' + ${recensione.ora} + '] ' + ${recensione.utente.nome} + ' ' + ${recensione.utente.cognome} + ', voto: ' + ${recensione.voto}">[ora] Nome Cognome</strong>
+							            <p th:text="${recensione.feedback}">Contenuto recensione</p>
+							        </div>
+							    </div>
+								<div th:if="${recensione.utente.id == utente.id}" class="recensione-content">
+								        <div class="recensione-text">
+								            <strong th:text="'[' + ${recensione.ora} + '] ' + ${recensione.utente.nome} + ' ' + ${recensione.utente.cognome} + ', voto: ' + ${recensione.voto}">[ora] Nome Cognome</strong>
+								            <p th:text="${recensione.feedback}">Contenuto recensione</p>
+								        </div>
+										<!-- Pulsante Elimina compatto -->
+										<div class="delete-form">
+										    <form th:action="@{'/utente/videogiochi/'+${videogioco.id}+'/recensioni/' + ${recensione.id} + '/delete'}" method="post" class="delete-form">
+										        <input type="hidden" name="_method" value="delete" />
+										        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+												<button type="submit"
+										                title="Elimina"
+										                class="delete-button">
+										            🗑️
+										        </button>
+										    </form>
+										</div>
+								   </div>
+							</li>
+
+		                </ul>
+		            </div>
+		            <div th:if="${recensioni == null or recensioni.isEmpty()}">
+		                <p>Nessuna recensione ancora.</p>
+		            </div>
+		        </div>
+		
+		        <!-- Form nuova recensione -->
+				<div class="game-description">
+					<form th:if="${recensioneUtente == null}" method="post" th:action="@{'/utente/videogiochi/' + ${videogioco.id} + '/recensioni'}">
+						<h2>Scrivi una nuova recensione</h2>
+						<label for="feedback">Il tuo commento</label>
+						<input type="text"
+				               name="feedback"
+				               maxlength="100"
+				               placeholder="Scrivi qualcosa..."
+				               required>
+		                <label for="voto">Il tuo voto (0-5)</label>
+		                <select id="voto" name="voto" required class="voto-list">
+		                    <option value="" disabled selected>Scegli il voto</option>
+		                    <option value="0">0</option>
+		                    <option value="1">1</option>
+		                    <option value="2">2</option>
+		                    <option value="3">3</option>
+		                    <option value="4">4</option>
+		                    <option value="5">5</option>
+		                </select>
+		                <button type="submit" class="cta-button message-button">Invia recensione</button>
+		            </form>
+				</div>
+		    </div>
+		</main>
+		
+		<footer class="footer">
+		    <div class="footer-content">
+		        <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+		    </div>
+		</footer>
+	</body>
+</html>

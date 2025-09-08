@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" th:href="@{/images/logo.png}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Errore ' + ${status} + ' - GameHub'">Errore - GameHub</title>
+    <link rel="stylesheet" th:href="@{/css/videogiochi.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+</head>
+<body>
+
+<header class="header">
+    <nav class="nav">
+        <a th:href="@{/}" class="logo">GameHub</a>
+        <div class="nav-links">
+            <a th:href="@{/}" class="nav-link">Home</a>
+            <a th:href="@{/videogiochi}" class="nav-link">Videogiochi</a>
+            <a th:href="@{/login}" class="nav-link">Accedi</a>
+        </div>
+    </nav>
+</header>
+
+<main class="main-content">
+    <div class="error-container">
+        <h1 th:text="'Errore ' + ${status} + ': ' + ${error}">Errore</h1>
+        
+        <a th:href="@{/}">Torna alla Home</a>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #F5F5F5;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(51, 51, 51);
+}
+.header {
+  background: linear-gradient(135deg, #FF5733 0%, #FFC300 100%);
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+.logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.nav-link:hover, .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.main-content {
+  flex: 1;
+  min-width: 500px;
+  margin: 2.5rem auto 2rem auto;
+  padding: 2rem 1.5rem;
+  background: rgba(39, 40, 42, 0.92);
+  border-radius: 18px;
+  box-shadow: 0 3px 18px 0 rgba(0,0,0,.18);
+}
+h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+  color: #FFC300;
+  text-align: center;
+}
+.error-message, .success-message {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 0.98rem;
+  animation: fadeIn 0.3s ease-in;
+}
+.error-message {
+  background-color: rgba(255, 87, 51, 0.1);
+  color: #FF5733;
+  border: 1px solid rgba(255, 87, 51, 0.3);
+}
+.success-message {
+  background-color: rgba(50,205,50,0.10);
+  color: #44e960;
+  border: 1px solid rgba(50,205,50,0.22);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+label {
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-left: 2px;
+  color: #f6e8cc;
+  transition: color 0.2s;
+}
+input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  background: #232323;
+  border: 1.7px solid #3d3d3d;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #f2f2f2;
+  outline: none;
+  transition: border-color 0.28s, box-shadow 0.28s;
+  box-shadow: 0 1.5px 6px rgba(255,195,0,0.06);
+  margin-top: 2px;
+}
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+  border-color: #FFC300;
+  box-shadow: 0 1.5px 8px 0 #ffc30033;
+}
+.loader {
+  display: none;
+  margin: 0 auto;
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #ff5733;
+  width: 32px;
+  height: 32px;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  0%   { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+.form-feedback {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.93rem;
+  color: #ff5733;
+  min-height: 1.1em;
+  margin-left: 4px;
+}
+button[type="submit"] {
+  margin-top: 8px;
+  background: linear-gradient(135deg, #FF5733 0%, #FFC300 77%);
+  border: none;
+  padding: 15px 0;
+  border-radius: 11px;
+  font-weight: 700;
+  font-size: 1.16rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 2.3px 10px rgba(0,0,0,.10);
+  transition: background 0.25s, transform 0.12s, box-shadow 0.19s;
+  outline: none;
+}
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+  background: linear-gradient(135deg, #FFC300 15%, #FF5733 100%);
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.035);
+  box-shadow: 0 5px 18px rgba(255,195,0,0.13);
+}
+.login-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.login-link p {
+  color: #f6e8cc;
+  font-size: 0.96rem;
+}
+.login-link a {
+  color: #FFC300;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.login-link a:hover {
+  color: #FF5733;
+  background-color: rgba(255, 195, 0, 0.1);
+}
+@media (max-width: 640px) {
+  .main-content {
+    max-width: 98vw;
+    padding: 1.2rem 0.2rem;
+    border-radius: 0;
+    min-width: 0;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+  form {
+    gap: 0.65rem;
+  }
+}
+.footer {
+  background-color: rgba(39, 40, 42, 255);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: auto;
+}
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}

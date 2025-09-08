@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: videogames
+    env: java
+    plan: free
+    buildCommand: ./mvnw clean install
+    startCommand: java -jar target/videogames-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: 17
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://dpg-d0suntbipnpbc73e2916g-a:5432/videogames_fpem
+      - key: SPRING_DATASOURCE_USERNAME
+        value: ale
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: pX0xMC7wXbGmz8trQ8VbWvv7bbqvcIAD

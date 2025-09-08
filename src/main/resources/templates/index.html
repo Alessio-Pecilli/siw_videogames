@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<link rel="icon" th:href="@{images/logo.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Home</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+    <!-- Sezione Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="main-title">GameHub</h1>
+            <p class="subtitle">La tua destinazione definitiva per i videogiochi</p>
+        </div>
+    </div>
+
+    <!-- Sezione di Navigazione Principale -->
+    <main class="main-navigation">
+        <nav class="nav-grid">
+            <!-- Catalogo Videogiochi -->
+            <a th:href="@{/videogiochi}" class="nav-card">
+                <div class="nav-icon">🎮</div>
+                <h2>Catalogo Videogiochi</h2>
+                <p>Esplora la nostra collezione di giochi</p>
+            </a>
+
+            <!-- Area Personale (utente) - senza riferimento a utente.id -->
+            <a th:href="@{/login}" class="nav-card">
+                <div class="nav-icon">👤 | 🛠️</div>
+                <h2>Area Personale</h2>
+                <p>Accedi al tuo account</p>
+            </a>
+        </nav>
+    </main>
+
+    <!-- Footer -->
+	<footer class="footer">
+	    <div class="footer-content">
+	        <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+	    </div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" th:href="@{images/logo.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Profilo Utente</title>
+    <link rel="stylesheet" th:href="@{/css/utente.css}">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a class="logo">GameHub</a>
+            <div class="nav-links">
+                <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link active">Profilo</a>
+                <a th:href="@{/utente/videogiochi}" class="nav-link">Videogiochi</a>
+                <a th:href="@{/logout}" class="nav-link">Esci</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="profile-card">
+            <div class="profile-header">
+                <h1 th:text="'Benvenuto, ' + ${utente.nome}">Benvenuto</h1>
+            </div>
+
+            <div class="profile-info">
+                <div class="info-card">
+                    <h3>Informazioni Utente</h3>
+                    <p><strong>Nome:</strong> <span th:text="${utente.nome}">Mario</span></p>
+                    <p><strong>Cognome:</strong> <span th:text="${utente.cognome}">Rossi</span></p>
+                    <p><strong>Email:</strong> <span th:text="${utente.email}">mario.rossi@example.com</span></p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Azioni</h3>
+                    <a th:href="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" class="cta-button edit-profile-button">Modifica Profilo</a>
+					<!-- Bottone/modal per password -->
+					<a th:href="@{'/utente/' + ${utente.id} + '?showPasswordModal=true'}" class="cta-button change-password-button">Cambia Password</a>
+                </div>
+            </div>
+        </div>
+		<div th:if="${showPasswordModal == true}"
+           th:classappend="${showPasswordModal} ? '' : 'modal-hidden'"
+           class="modal-overlay"
+         >
+           <form class="password-card" th:action="@{'/utente/' + ${utente.id} + '/cambiaPassword'}" method="post">
+               <h2>Cambia Password</h2>
+			   <span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>
+               <label for="newPassword">Nuova password</label>
+               <input
+                   type="password"
+                   id="newPwd"
+                   name="newPwd"
+                   placeholder="Inserisci la nuova password"
+                   required
+                   minlength="8"
+               />
+               <label for="confirmPassword">Conferma nuova password</label>
+               <input
+                   type="password"
+                   id="confirmPwd"
+                   name="confirmPwd"
+                   placeholder="Conferma la nuova password"
+                   required
+                   minlength="8"
+               />
+               <div class="password-btns">
+                   <a th:href="@{'/utente/' + ${utente.id}}" class="password-btn cancel">Annulla</a>
+                   <button type="submit" class="password-btn submit">Conferma</button>
+               </div>
+           </form>
+		</div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>GameHub Italia - La tua piattaforma di videogiochi</p>
+        </div>
+    </footer>
+</body>
+</html>
