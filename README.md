@@ -2,6 +2,7 @@
 
 Di seguito sono elencati i principali **casi d’uso** del sistema, con indicazione dell’attore primario coinvolto e dell’interazione con il sistema.
 
+
 ### UC1 – **Scrittura recensione**  
 **Attore primario**: Utente registrato  
 L’utente registrato utilizza il sistema per scrivere una recensione relativa a un videogioco. Il sistema registra la recensione associandola all’utente e al videogioco selezionato.
