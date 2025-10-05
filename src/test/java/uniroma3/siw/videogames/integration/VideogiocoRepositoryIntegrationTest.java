@@ -46,23 +46,27 @@ class VideogiocoRepositoryIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // Inizializza e persisti gli stati (senza ID, lascia che H2 li generi automaticamente)
+        // Inizializza e persisti gli stati (ID generato automaticamente da H2)
         statoPubblicato = new Stato();
         statoPubblicato.setDescrizione("Pubblicato");
-        statoPubblicato = entityManager.persistAndFlush(statoPubblicato);
+        entityManager.persist(statoPubblicato);
+        entityManager.flush();
 
         statoInSviluppo = new Stato();
         statoInSviluppo.setDescrizione("In Sviluppo");
-        statoInSviluppo = entityManager.persistAndFlush(statoInSviluppo);
+        entityManager.persist(statoInSviluppo);
+        entityManager.flush();
 
         // Inizializza e persisti le categorie
         categoriaAction = new Categoria();
         categoriaAction.setNome("Action");
-        categoriaAction = entityManager.persistAndFlush(categoriaAction);
+        entityManager.persist(categoriaAction);
+        entityManager.flush();
 
         categoriaAdventure = new Categoria();
         categoriaAdventure.setNome("Adventure");
-        categoriaAdventure = entityManager.persistAndFlush(categoriaAdventure);
+        entityManager.persist(categoriaAdventure);
+        entityManager.flush();
 
         // Inizializza i videogiochi
         videogioco1 = new Videogioco("Super Mario Bros", 
@@ -78,9 +82,10 @@ class VideogiocoRepositoryIntegrationTest {
                                     List.of(categoriaAdventure));
 
         // Persisti i videogiochi
-        videogioco1 = entityManager.persistAndFlush(videogioco1);
-        videogioco2 = entityManager.persistAndFlush(videogioco2);
-
+        entityManager.persist(videogioco1);
+        entityManager.persist(videogioco2);
+        entityManager.flush();
+        
         entityManager.clear();
     }
 

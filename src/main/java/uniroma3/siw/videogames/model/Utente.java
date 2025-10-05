@@ -93,7 +93,7 @@ public class Utente {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cognome, email, nome);
+		return Objects.hash(email);
 	}
 
 	@Override
