@@ -15,7 +15,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import uniroma3.siw.videogames.model.Categoria;
@@ -27,19 +28,22 @@ import uniroma3.siw.videogames.service.VideogiocoService;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(VideogiocoController.class)
+@TestPropertySource(properties = {
+    "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration"
+})
 @DisplayName("Test per VideogiocoController")
 class VideogiocoControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean
+    @MockBean
     private VideogiocoService videogiocoService;
 
-    @MockitoBean
+    @MockBean
     private StatoService statoService;
 
-    @MockitoBean
+    @MockBean
     private CategoriaService categoriaService;
 
     private Videogioco videogioco1;

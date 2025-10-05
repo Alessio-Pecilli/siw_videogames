@@ -46,14 +46,12 @@ class VideogiocoRepositoryIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        // Inizializza e persisti gli stati
+        // Inizializza e persisti gli stati (senza ID, lascia che H2 li generi automaticamente)
         statoPubblicato = new Stato();
-        statoPubblicato.setId(1L);
         statoPubblicato.setDescrizione("Pubblicato");
         statoPubblicato = entityManager.persistAndFlush(statoPubblicato);
 
         statoInSviluppo = new Stato();
-        statoInSviluppo.setId(2L);
         statoInSviluppo.setDescrizione("In Sviluppo");
         statoInSviluppo = entityManager.persistAndFlush(statoInSviluppo);
 
