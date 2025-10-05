@@ -1,0 +1,166 @@
+name: SIW Books - Full Java CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+  security-events: write
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:check || echo "⚠️ Checkstyle warnings trovati - continuo"
+        continue-on-error: true
+
+      - name: Run SpotBugs
+        run: mvn compile && mvn com.github.spotbugs:spotbugs-maven-plugin:check || echo "⚠️ SpotBugs warnings trovati - continuo"
+        continue-on-error: true
+
+  security:
+    name: Security Scan (CodeQL)
+    runs-on: ubuntu-latest
+    needs: quality
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+        continue-on-error: true
+
+      - name: Compile for CodeQL
+        run: mvn -B clean compile -DskipTests || echo "⚠️ Compilazione fallita, continuo"
+        continue-on-error: true
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@v3
+        continue-on-error: true
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: security
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+
+      - name: Run Unit Tests
+        run: mvn test -Dspring.profiles.active=ci
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: books
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Run Integration Tests
+        run: mvn verify -Dspring.profiles.active=ci
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/books
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+
+  package:
+    name: Packaging / Deliverable
+    runs-on: ubuntu-latest
+    needs: integration-tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Build JAR
+        run: mvn -B clean package -DskipTests
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: siwbooks-build
+          path: target/*.jar
+
+  deliver:
+    name: GitHub Release
+    runs-on: ubuntu-latest
+    needs: package
+    if: success() && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: siwbooks-build
+          path: ./build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: "Release ${{ github.run_number }} - SIW Books"
+          body: "📚 CI/CD automatica: sicurezza → test → QA → packaging → release"
+          files: build/target/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
