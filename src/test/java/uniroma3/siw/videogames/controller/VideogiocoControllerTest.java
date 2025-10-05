@@ -1,6 +1,5 @@
 package uniroma3.siw.videogames.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -14,9 +13,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.ActiveProfiles;
 
 import uniroma3.siw.videogames.model.Categoria;
 import uniroma3.siw.videogames.model.Stato;
@@ -26,11 +27,10 @@ import uniroma3.siw.videogames.service.StatoService;
 import uniroma3.siw.videogames.service.VideogiocoService;
 
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest(controllers = VideogiocoController.class, 
-           excludeAutoConfiguration = {
-               org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-               org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration.class
-           })
+@SpringBootTest(classes = {uniroma3.siw.videogames.VideogamesApplication.class, 
+                          uniroma3.siw.videogames.config.ControllerTestConfig.class})
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
 @DisplayName("Test per VideogiocoController")
 class VideogiocoControllerTest {
 
