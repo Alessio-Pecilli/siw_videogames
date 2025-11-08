@@ -10,8 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,9 +24,13 @@ import uniroma3.siw.videogames.service.CategoriaService;
 import uniroma3.siw.videogames.service.StatoService;
 import uniroma3.siw.videogames.service.VideogiocoService;
 
-@ExtendWith(MockitoExtension.class)
-@SpringBootTest(classes = {uniroma3.siw.videogames.VideogamesApplication.class, 
-                          uniroma3.siw.videogames.config.ControllerTestConfig.class})
+@SpringBootTest(
+    classes = {
+        uniroma3.siw.videogames.VideogamesApplication.class,
+        uniroma3.siw.videogames.config.ControllerTestConfig.class
+    },
+    webEnvironment = SpringBootTest.WebEnvironment.MOCK
+)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @DisplayName("Test per VideogiocoController")
