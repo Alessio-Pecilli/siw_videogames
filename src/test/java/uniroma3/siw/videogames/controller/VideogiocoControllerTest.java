@@ -26,7 +26,8 @@ import uniroma3.siw.videogames.service.VideogiocoService;
 
 @SpringBootTest(
     classes = {
-        uniroma3.siw.videogames.VideogamesApplication.class
+        uniroma3.siw.videogames.VideogamesApplication.class,
+        uniroma3.siw.videogames.config.ControllerTestConfig.class
     },
     webEnvironment = SpringBootTest.WebEnvironment.MOCK,
     properties = {
