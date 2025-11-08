@@ -30,18 +30,15 @@ jobs:
             ${{ runner.os }}-m2-
 
       - name: Run Checkstyle
-        run: mvn checkstyle:check || echo "⚠️ Checkstyle warnings trovati - continuo"
-        continue-on-error: true
+        run: mvn checkstyle:check
 
       - name: Run SpotBugs
-        run: mvn compile && mvn com.github.spotbugs:spotbugs-maven-plugin:check || echo "⚠️ SpotBugs warnings trovati - continuo"
-        continue-on-error: true
+        run: mvn compile && mvn com.github.spotbugs:spotbugs-maven-plugin:check
 
   security:
     name: Security Scan (CodeQL)
     runs-on: ubuntu-latest
     needs: quality
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v3
@@ -52,13 +49,10 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: java
-        continue-on-error: true
       - name: Compile for CodeQL
-        run: mvn -B clean compile -DskipTests || echo "⚠️ Compilazione fallita, continuo"
-        continue-on-error: true
+        run: mvn -B clean compile -DskipTests
       - name: Analyze
         uses: github/codeql-action/analyze@v3
-        continue-on-error: true
 
   unit-tests:
     name: Unit Tests
@@ -77,8 +71,8 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-m2-
-      - name: Run Unit Tests (non-blocking)
-        run: mvn test -Dspring.profiles.active=ci -Dmaven.test.failure.ignore=true
+      - name: Run Unit Tests
+        run: mvn test -Dspring.profiles.active=ci
 
   integration-tests:
     name: Integration Tests
@@ -104,8 +98,8 @@ jobs:
         with:
           distribution: "temurin"
           java-version: "17"
-      - name: Run Integration Tests (non-blocking)
-        run: mvn verify -Dspring.profiles.active=ci -Dmaven.test.failure.ignore=true
+      - name: Run Integration Tests
+        run: mvn verify -Dspring.profiles.active=ci
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/videogames
           SPRING_DATASOURCE_USERNAME: postgres
@@ -116,9 +110,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: integration-tests
     steps:
-      - name: Run QA checks (non-blocking)
+      - name: Run QA checks
         run: echo "✅ QA completato con successo."
-        continue-on-error: true
 
   package:
     name: Packaging / Deliverable
@@ -154,7 +147,7 @@ jobs:
         with:
           tag_name: v${{ github.run_number }}
           name: "Release ${{ github.run_number }} - SIW Videogames"
-          body: "🎮 CI/CD automatica completata con successo."
-          files: build/target/*.jar
+          body: "CI/CD automatica completata con successo."
+          files: build/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
