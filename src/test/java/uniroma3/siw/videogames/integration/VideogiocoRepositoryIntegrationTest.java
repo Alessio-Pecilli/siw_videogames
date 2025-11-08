@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -191,7 +192,6 @@ class VideogiocoRepositoryIntegrationTest {
     void testCount() {
         // When
         long count = videogiocoRepository.count();
-
         // Then
         assertEquals(2, count);
     }
