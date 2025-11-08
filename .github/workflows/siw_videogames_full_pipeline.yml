@@ -73,7 +73,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-m2-
       - name: Run Unit Tests
-        run: mvn test -Dspring.profiles.active=ci -Dcheckstyle.failOnViolation=false -Dspotbugs.failOnError=false
+        run: mvn test -Dspring.profiles.active=test -Dcheckstyle.failOnViolation=false -Dspotbugs.failOnError=false
 
   integration-tests:
     name: Integration Tests
