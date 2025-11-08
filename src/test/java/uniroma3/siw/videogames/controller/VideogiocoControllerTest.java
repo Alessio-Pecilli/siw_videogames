@@ -24,13 +24,7 @@ import uniroma3.siw.videogames.service.CategoriaService;
 import uniroma3.siw.videogames.service.StatoService;
 import uniroma3.siw.videogames.service.VideogiocoService;
 
-@SpringBootTest(
-    classes = {
-        uniroma3.siw.videogames.VideogamesApplication.class,
-        uniroma3.siw.videogames.config.ControllerTestConfig.class
-    },
-    webEnvironment = SpringBootTest.WebEnvironment.MOCK
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @DisplayName("Test per VideogiocoController")
